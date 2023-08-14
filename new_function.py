@@ -1,1 +1,1 @@
-##Python code to read iris data and print summary stastistics  
+##Python code to read iris data and print summary statistics  
