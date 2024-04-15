@@ -16,7 +16,7 @@ table = psdf.describe().to_pandas().rename_axis('Metric').reset_index().round(2)
  
 plt = psdf['cltv'].plot.box()
  
-f.save_table(table, name="Table")
+f.save_table(table, name="Summary Statistics")
  
 f.save_graph(plt)
 # your code here
