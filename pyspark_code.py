@@ -4,13 +4,7 @@ from pyspark.sql import SparkSession
 import pyspark.pandas as ps
 import os
 os.environ["PYARROW_IGNORE_TIMEZONE"] = "1"
- 
-conf = SparkConf().set('spark.executor.memory', '1G')
-spark = SparkSession \
-    .builder \
-    .config(conf=conf) \
-    .appName("Summary Statistic") \
-    .getOrCreate()
+spark = SparkSession.builder.getOrCreate()
  
 f = Functions()
  
@@ -22,9 +16,7 @@ table = psdf.describe().to_pandas().rename_axis('Metric').reset_index()
  
 plt = psdf['cltv'].plot.box()
  
-print(table)
- 
 f.save_table(table, name="Table")
  
-f.save_graph(plt, name="Graph")
+f.save_graph(plt)
 # your code here
