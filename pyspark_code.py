@@ -12,7 +12,7 @@ df = f.get_args("df")
  
 psdf = ps.from_pandas(df)
  
-table = psdf.describe().to_pandas().rename_axis('Metric').reset_index()
+table = psdf.describe().to_pandas().rename_axis('Metric').reset_index().round(2)
  
 plt = psdf['cltv'].plot.box()
  
