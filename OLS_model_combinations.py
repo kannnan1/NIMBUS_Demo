@@ -222,6 +222,89 @@ Regression(['target'],filtered_combinations, df)
 
 # In[ ]:
 
+import pandas as pd
+import statsmodels.api as sm
+from statsmodels.stats.stattools import durbin_watson
+from statsmodels.stats.diagnostic import het_breuschpagan
+from statsmodels.tsa.stattools import adfuller
+import numpy as np
+
+def run_regression_analysis(df, target_col):
+    # Initialize results DataFrame
+    results = pd.DataFrame(columns=[
+        'Variable', 'R_squared', 'Adj_R_squared', 'F_stat', 'Intercept', 'Intercept_pvalue', 
+        'Coeff', 'Coeff_pvalue', 'ADF_stat', 'ADF_pvalue', 'BP_stat', 'BP_pvalue', 'DW_stat'
+    ])
+
+    # Target variable
+    y = df[target_col]
+
+    # Iterate over each variable
+    for var in df.columns:
+        if var == target_col:
+            continue
+        
+        X = df[[var]]
+        X = sm.add_constant(X)
+        
+        # Fit OLS model
+        model = sm.OLS(y, X).fit()
+        
+        # Check significance of the variable
+        if model.pvalues[var] > 0.05:
+            # Calculate statistics
+            r_squared = model.rsquared
+            adj_r_squared = model.rsquared_adj
+            f_stat = model.fvalue
+            intercept = model.params['const']
+            intercept_pvalue = model.pvalues['const']
+            coeff = model.params[var]
+            coeff_pvalue = model.pvalues[var]
+            
+            # ADF test on residuals
+            adf_test = adfuller(model.resid)
+            adf_stat = adf_test[0]
+            adf_pvalue = adf_test[1]
+            
+            # Breusch-Pagan test
+            bp_test = het_breuschpagan(model.resid, X)
+            bp_stat = bp_test[0]
+            bp_pvalue = bp_test[1]
+            
+            # Durbin-Watson test
+            dw_stat = durbin_watson(model.resid)
+            
+            # Append results to DataFrame
+            results = results.append({
+                'Variable': var,
+                'R_squared': r_squared,
+                'Adj_R_squared': adj_r_squared,
+                'F_stat': f_stat,
+                'Intercept': intercept,
+                'Intercept_pvalue': intercept_pvalue,
+                'Coeff': coeff,
+                'Coeff_pvalue': coeff_pvalue,
+                'ADF_stat': adf_stat,
+                'ADF_pvalue': adf_pvalue,
+                'BP_stat': bp_stat,
+                'BP_pvalue': bp_pvalue,
+                'DW_stat': dw_stat
+            }, ignore_index=True)
+
+    return results
+
+# Example usage:
+data = {
+    'target': np.random.randn(100),
+    'log_var1': np.random.randn(100),
+    'var1_T': np.random.randn(100),
+    'var2_log': np.random.randn(100)
+}
+
+df = pd.DataFrame(data)
+target_col = 'target'
+results = run_regression_analysis(df, target_col)
+print(results)
 
 
 
