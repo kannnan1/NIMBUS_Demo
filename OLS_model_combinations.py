@@ -307,4 +307,117 @@ results = run_regression_analysis(df, target_col)
 print(results)
 
 
+import pandas as pd
+import statsmodels.api as sm
+from statsmodels.stats.stattools import durbin_watson
+from statsmodels.stats.diagnostic import het_breuschpagan
+from statsmodels.tsa.stattools import adfuller
+import numpy as np
+from itertools import combinations
+
+# Function to determine the original variable from a transformed feature
+def get_original_variable(feature, original_features):
+    for original in original_features:
+        if original in feature:
+            return original
+    return None
+
+# Function to generate filtered combinations
+def generate_filtered_combinations(original_features, transformed_features):
+    # Create all possible combinations of transformed features
+    combinations_list = list(combinations(transformed_features, 2))
+    
+    # Filter combinations to ensure they are not from the same original variable family
+    filtered_combinations = [
+        (f1, f2) for f1, f2 in combinations_list if get_original_variable(f1, original_features) != get_original_variable(f2, original_features)
+    ]
+    
+    # Format the combinations as strings joined by a single quote and return them in a list
+    formatted_combinations = [f"'{f1}','{f2}'" for f1, f2 in filtered_combinations]
+    
+    return formatted_combinations
+
+# Function to run regression analysis
+def run_regression_analysis(df, target_col, combinations_list):
+    # Initialize results DataFrame
+    results = pd.DataFrame(columns=[
+        'Variables', 'R_squared', 'Adj_R_squared', 'F_stat', 'Intercept', 'Intercept_pvalue', 
+        'Coeffs', 'Coeffs_pvalue', 'ADF_stat', 'ADF_pvalue', 'BP_stat', 'BP_pvalue', 'DW_stat'
+    ])
+
+    # Target variable
+    y = df[target_col]
+
+    # Iterate over each combination of variables
+    for combination in combinations_list:
+        vars = [v.strip("'") for v in combination.split(",")]
+        X = df[vars]
+        X = sm.add_constant(X)
+        
+        # Fit OLS model
+        model = sm.OLS(y, X).fit()
+        
+        # Calculate statistics
+        r_squared = model.rsquared
+        adj_r_squared = model.rsquared_adj
+        f_stat = model.fvalue
+        intercept = model.params['const']
+        intercept_pvalue = model.pvalues['const']
+        coeffs = model.params[vars].tolist()
+        coeffs_pvalue = model.pvalues[vars].tolist()
+        
+        # ADF test on residuals
+        adf_test = adfuller(model.resid)
+        adf_stat = adf_test[0]
+        adf_pvalue = adf_test[1]
+        
+        # Breusch-Pagan test
+        bp_test = het_breuschpagan(model.resid, X)
+        bp_stat = bp_test[0]
+        bp_pvalue = bp_test[1]
+        
+        # Durbin-Watson test
+        dw_stat = durbin_watson(model.resid)
+        
+        # Append results to DataFrame
+        results = results.append({
+            'Variables': combination,
+            'R_squared': r_squared,
+            'Adj_R_squared': adj_r_squared,
+            'F_stat': f_stat,
+            'Intercept': intercept,
+            'Intercept_pvalue': intercept_pvalue,
+            'Coeffs': coeffs,
+            'Coeffs_pvalue': coeffs_pvalue,
+            'ADF_stat': adf_stat,
+            'ADF_pvalue': adf_pvalue,
+            'BP_stat': bp_stat,
+            'BP_pvalue': bp_pvalue,
+            'DW_stat': dw_stat
+        }, ignore_index=True)
+
+    return results
+
+# Example usage:
+data = {
+    'target': np.random.randn(100),
+    'Consumerspending_log': np.random.randn(100),
+    'Consumerspending_lag1': np.random.randn(100),
+    'RealGDP_log': np.random.randn(100)
+}
+
+df = pd.DataFrame(data)
+target_col = 'target'
+
+# Define original and transformed features
+original_features = ['Consumerspending', 'Real,GDP']
+transformed_features = ['Consumerspending_log', 'Consumerspending_lag1', 'RealGDP_log']
+
+# Generate filtered combinations
+filtered_combinations = generate_filtered_combinations(original_features, transformed_features)
+print("Filtered Combinations:", filtered_combinations)
+
+# Run regression analysis
+results = run_regression_analysis(df, target_col, filtered_combinations)
+print(results)
 
