@@ -1,0 +1,85 @@
+import numpy as np
+import pandas as pd
+import statsmodels.api as sm
+import seaborn as sns
+def linear_sensitivity(model,train_data,col,shock,shock_value=2,target=None):
+  
+    train_data=model.model.data.orig_exog
+    y_normal=model.predict(train_data)
+
+    if shock=="std":
+        test1=train_data.copy()
+        test2=train_data.copy()
+        n=shock_value
+        for i in col:
+            x=test1[i].std()
+            test1[i]=test1[i]+n*x
+            test2[i]=test2[i]-n*x
+
+        y_pos=model.predict(test1)
+
+
+        y_neg=model.predict(test2)
+
+
+
+    if shock=="percentage":
+        test1=train_data.copy()
+        test2=train_data.copy()
+        n=shock_value
+        for i in col:
+            test1[i]=test1[i]+(test1[i]*(n/100))
+            test2[i]=test2[i]-(test1[i]*(n/100))
+
+        y_pos=model.predict(test1)
+
+
+        y_neg=model.predict(test2)
+
+
+    df=pd.DataFrame()
+    df["y_pos"]=y_pos
+    df["y_normal"]=y_normal
+    df["y_neg"]=y_neg
+    df["points"]=df.index
+
+    #Table "Sensitivity Result"
+    data=df[['y_pos','y_normal','y_neg']]
+    data.columns=[f'{target} (Positive Shock)',f'{target}',f'{target} (Negative Shock)']
+    # Plotting
+    plt.figure(figsize=(10, 6))
+    sns.lineplot(data=data, palette="tab10", linewidth=2.5)
+
+    plt.title('Def_rate Sensitivity Analysis')
+    plt.xlabel('Index')
+    plt.ylabel('Def_rate')
+    plt.legend(title='Shock Type')
+    plt.grid(True)
+    plt.show()
+    return data.round(4)
+
+# Example usage
+import statsmodels.api as sm
+import numpy as np
+import pandas as pd
+
+# Example data
+np.random.seed(0)
+df = pd.DataFrame({
+    'x1': np.random.normal(size=100),
+    'x2': np.random.normal(size=100),
+    'y': np.random.normal(size=100)
+})
+
+# Fitting the model
+X = df[['x1', 'x2']]
+X = sm.add_constant(X)  # Adding a constant column for the intercept
+y = df['y']
+
+model = sm.OLS(y, X).fit()
+pred_values = model.predict(X)
+print(pred_values)
+
+# Perform sensitivity analysis
+sensitivity_results = linear_sensitivity(model = model,train_data =X,col = X.columns,shock='percentage',shock_value=2,target='Def_rate')
+print(sensitivity_results)
