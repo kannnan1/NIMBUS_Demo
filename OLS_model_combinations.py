@@ -421,27 +421,46 @@ print("Filtered Combinations:", filtered_combinations)
 results = run_regression_analysis(df, target_col, filtered_combinations)
 print(results)
 
-# Function to apply the transformation
-def apply_transformation(df):
-    # Iterate over each row
-    for i in range(len(df)):
-        # Iterate over each column except the first and the last one
-        for j in range(1, len(df.columns) - 1):
-            current_col = df.columns[j]
-            next_col = df.columns[j + 1]
+import pandas as pd
 
+def apply_transformation(df):
+    # Iterate over each column except the first and the last one
+    for i in range(1, len(df.columns) - 1):
+        current_col = df.columns[i]
+        next_col = df.columns[i + 1]
+        
+        # Store original values to restore if condition is not met
+        original_values_current_col = df[current_col].copy()
+        original_values_next_col = df[next_col].copy()
+
+        # Iterate over each row
+        for j in range(1, len(df)):
             # Apply the formula if the condition is met
-            if df.at[i, next_col] < df.at[i, current_col]:
-                prev_value_current_col = df.at[i - 1, current_col] if i > 0 else df.at[i, current_col]
-                print(prev_value_current_col)
-                prev_value_next_col = df.at[i-1, next_col] if i > 0 else df.at[i, next_col]
-                df.at[i, next_col] = df.at[i, next_col] * (prev_value_current_col /prev_value_next_col)
-    
+            if df.loc[j, next_col] < df.loc[j, current_col]:
+                fix_current = df.loc[j-1, current_col]
+                fix_next = df.loc[j-1, next_col]
+                df.loc[j:, current_col] = df.loc[j:, current_col] * (fix_current / fix_next)
+                df.loc[j:, next_col] = df.loc[j:, next_col] * (fix_current / fix_next)
+                break
+            else:
+                # Restore original values if condition is not met
+                df.loc[j, current_col] = original_values_current_col[j]
+                df.loc[j, next_col] = original_values_next_col[j]
+
+        # Update previous value for next iterations
+        prev_value_current_col = df.loc[j, current_col] if j > 0 else df.loc[j, current_col]
+        prev_value_next_col = df.loc[j, next_col] if j > 0 else df.loc[j, next_col]
+        
     return df
 
-# Apply the transformation
-df_transformed = apply_transformation(df.copy())
+# Sample DataFrame
+data = {
+    'A': [10, 20, 30, 40, 50],
+    'B': [5, 15, 25, 35, 45],
+    'C': [2, 4, 6, 8, 10]
+}
+df = pd.DataFrame(data)
 
-# Display the transformed DataFrame
-print("Transformed DataFrame:")
+# Apply the transformation
+df_transformed = apply_transformation(df)
 print(df_transformed)
