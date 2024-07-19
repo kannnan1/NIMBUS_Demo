@@ -421,3 +421,27 @@ print("Filtered Combinations:", filtered_combinations)
 results = run_regression_analysis(df, target_col, filtered_combinations)
 print(results)
 
+# Function to apply the transformation
+def apply_transformation(df):
+    # Iterate over each row
+    for i in range(len(df)):
+        # Iterate over each column except the first and the last one
+        for j in range(1, len(df.columns) - 1):
+            current_col = df.columns[j]
+            next_col = df.columns[j + 1]
+
+            # Apply the formula if the condition is met
+            if df.at[i, next_col] < df.at[i, current_col]:
+                prev_value_current_col = df.at[i - 1, current_col] if i > 0 else df.at[i, current_col]
+                print(prev_value_current_col)
+                prev_value_next_col = df.at[i-1, next_col] if i > 0 else df.at[i, next_col]
+                df.at[i, next_col] = df.at[i, next_col] * (prev_value_current_col /prev_value_next_col)
+    
+    return df
+
+# Apply the transformation
+df_transformed = apply_transformation(df.copy())
+
+# Display the transformed DataFrame
+print("Transformed DataFrame:")
+print(df_transformed)
