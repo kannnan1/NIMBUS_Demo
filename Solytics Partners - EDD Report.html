@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<!-- saved from url=(0067)file:///Users/kannanvenkat/Documents/edd_report_solytics%20(3).html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solytics Partners - EDD Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #dfe9fe 0%, #f3f5ff 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #272d55 0%, #1e2347 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="80" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            position: relative;
+            z-index: 1;
+        }
+        
+        .company-logo-img {
+            height: 60px;
+            width: auto;
+            max-width: 120px;
+            object-fit: contain;
+        }
+        
+        .company-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .report-header {
+            padding: 30px;
+            background: linear-gradient(135deg, #f3f5ff 0%, #dfe9fe 100%);
+            border-bottom: 3px solid #272d55;
+        }
+        
+        .report-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #272d55;
+            margin-bottom: 15px;
+        }
+        
+        .report-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .meta-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(39, 45, 85, 0.1);
+            border-left: 4px solid #272d55;
+        }
+        
+        .meta-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .meta-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #272d55;
+            margin-top: 5px;
+        }
+        
+        .risk-score {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #dc3545;
+            color: white;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+        
+        .risk-number {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-right: 15px;
+        }
+        
+        .risk-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            background: #f3f5ff;
+            border-radius: 10px;
+            padding: 25px;
+            border-left: 5px solid #272d55;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #272d55;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-risk {
+            background: #dc3545;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .summary-box {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: #dfe9fe;
+            border-radius: 6px;
+            border-left: 3px solid #272d55;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .detail-value {
+            font-weight: 700;
+            color: #272d55;
+        }
+        
+        .warning-flag {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .audit-trail {
+            background: #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .audit-item {
+            background: white;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #6c757d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .timestamp {
+            color: #6c757d;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .sentiment-negative {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+        
+        .sentiment-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .evidence-quote {
+            background: #fff;
+            color: #2c3e50;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-style: italic;
+            border-left: 4px solid #dc3545;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-completed {
+            background: #28a745;
+            color: white;
+        }
+        
+        .footer {
+            background: #272d55;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .report-meta {
+                grid-template-columns: 1fr;
+            }
+            
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .risk-score {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .risk-number {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <div class="company-logo">SOLYTICS PARTNERS</div>
+            </div>
+            <div class="tagline">Advanced Financial Intelligence &amp; Risk Analytics</div>
+        </div>
+        
+        <div class="report-header">
+            <h1 class="report-title">Enhanced Due Diligence Investigation Report</h1>
+            
+            <div class="report-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Entity Name</div>
+                    <div class="meta-value">Offshore Holdings Ltd</div>
+                </div>
+        
+                <div class="meta-item">
+                    <div class="meta-label">Country</div>
+                    <div class="meta-value">Cayman Islands</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Identifier</div>
+                    <div class="meta-value">C-11223</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Date Initiated</div>
+                    <div class="meta-value">9/19/2025</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Investigation Status</div>
+                    <div class="meta-value">
+                        <span class="status-badge status-completed">Completed</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="risk-score">
+                <div class="risk-number">82</div>
+                <div class="risk-label">High Risk</div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2 class="section-title">
+                    Corporate Registration Check
+                    <span class="section-risk">50 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> The entity is an active International Business Company (IBC) in the Cayman Islands, a jurisdiction with a high degree of corporate secrecy. The registration was handled by a now-defunct formation agent notorious for servicing high-risk clientele and was implicated in the Panama Papers. The use of bearer shares is a critical red flag, making true ownership nearly impossible to trace through official records.</p>
+                </div>
+                
+                <div class="warning-flag">
+                    ⚠️ <strong>Critical Risk Factor:</strong> Bearer shares make beneficial ownership untraceable
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Registration ID:</span>
+                        <span class="detail-value">C-11223</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Status:</span>
+                        <span class="detail-value">Active</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Share Type:</span>
+                        <span class="detail-value">Bearer Shares</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Jurisdiction:</span>
+                        <span class="detail-value">Cayman Islands</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Formation Agent:</span>
+                        <span class="detail-value">Mossack Fonseca (defunct)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Background / Profile
+                    <span class="section-risk">30 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> Offshore Holdings Ltd has no discernible online presence, no operational footprint, and no publicly declared business activities. Its profile is that of a classic passive holding entity, existing solely on paper. This opacity is a significant risk factor as it suggests the company's primary purpose may be to obscure asset ownership or financial flows rather than conduct legitimate business.</p>
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Operational Activity:</span>
+                        <span class="detail-value">None</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Public Profile:</span>
+                        <span class="detail-value">None</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Purpose:</span>
+                        <span class="detail-value">Holding Company (stated)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Organizational Structure
+                    <span class="section-risk">40 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> The company's governance structure is designed for maximum anonymity, utilizing professional nominee directors and a third-party corporate service provider as the registered agent. This arrangement effectively conceals the identities of the true managers and beneficial owners, making it impossible to determine who is actually controlling the company and making its decisions.</p>
+                </div>
+                
+                <div class="warning-flag">
+                    🔍 <strong>Transparency Issue:</strong> True beneficial ownership and control obscured through nominee structure
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Directors:</span>
+                        <span class="detail-value">Nominee</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Management:</span>
+                        <span class="detail-value">Corporate Service Provider</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Control Obscured:</span>
+                        <span class="detail-value">Yes</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Shareholding Structure
+                    <span class="section-risk">45 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> The shareholding structure is deliberately opaque, utilizing bearer shares which provide complete anonymity to beneficial owners. No registered shareholders are identifiable through public records, and the company maintains a complex web of nominee arrangements that effectively shields the true economic interests from regulatory scrutiny.</p>
+                </div>
+                
+                <div class="warning-flag">
+                    🚩 <strong>Critical Finding:</strong> Bearer shares prevent identification of beneficial owners - potential violation of international transparency standards
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Share Class:</span>
+                        <span class="detail-value">Bearer Ordinary Shares</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Registered Holders:</span>
+                        <span class="detail-value">Not Disclosed</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Beneficial Owners:</span>
+                        <span class="detail-value">Unknown</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Voting Control:</span>
+                        <span class="detail-value">Undetermined</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Current Associated Parties
+                    <span class="section-risk">35 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> Current associated parties are limited to professional service providers acting in nominee capacities. The registered office is maintained by Cayman Corporate Services Ltd, a mass incorporation agent. Two nominee directors are employed: James Mitchell (UK resident) and Sarah Chen (Singapore resident), both professional nominees with no apparent economic interest in the entity.</p>
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Registered Agent:</span>
+                        <span class="detail-value">Cayman Corporate Services Ltd</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Nominee Directors:</span>
+                        <span class="detail-value">James Mitchell, Sarah Chen</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Secretary:</span>
+                        <span class="detail-value">Corporate Secretary Services Ltd</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Auditor:</span>
+                        <span class="detail-value">None Appointed</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Former Associated Parties
+                    <span class="section-risk">55 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> The entity was originally formed through Mossack Fonseca, the now-defunct law firm central to the Panama Papers scandal. Previous nominee arrangements included directors linked to multiple high-risk jurisdictions. The resignation of original formation agents coincided with increased regulatory scrutiny following the Panama Papers revelations in 2016.</p>
+                </div>
+                
+                <div class="warning-flag">
+                    ⚠️ <strong>High Risk Association:</strong> Original formation through Panama Papers-implicated service provider raises significant compliance concerns
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Original Formation Agent:</span>
+                        <span class="detail-value">Mossack Fonseca &amp; Co. (defunct)</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Former Directors:</span>
+                        <span class="detail-value">Multiple resignations 2016-2017</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Previous Registered Office:</span>
+                        <span class="detail-value">Mossack Fonseca Address (ceased)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Sanctions &amp; Watchlists
+                    <span class="section-risk">25 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> While the entity itself does not appear on primary sanctions lists, screening reveals indirect exposure through transactional relationships with entities subject to OFAC, EU, and UN sanctions. Enhanced monitoring identified potential connections to sanctioned individuals through correspondent banking relationships and fund transfers.</p>
+                </div>
+                
+                <div class="warning-flag">
+                    🎯 <strong>Sanctions Exposure:</strong> Indirect connections to sanctioned entities identified through transaction analysis
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Direct Sanctions:</span>
+                        <span class="detail-value">None Found</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Indirect Exposure:</span>
+                        <span class="detail-value">Identified</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Watchlist Status:</span>
+                        <span class="detail-value">Under Monitoring</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    PEP (Politically Exposed Person) Check
+                    <span class="section-risk">40 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> Advanced screening algorithms identified potential beneficial ownership links to individuals classified as Politically Exposed Persons (PEPs) in Eastern European jurisdictions. While direct connections cannot be conclusively established due to the opaque ownership structure, circumstantial evidence suggests possible PEP involvement requiring enhanced scrutiny.</p>
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Direct PEP Connections:</span>
+                        <span class="detail-value">Unconfirmed</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Indirect PEP Risk:</span>
+                        <span class="detail-value">Medium-High</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Family/Associate Links:</span>
+                        <span class="detail-value">Under Investigation</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Regulatory Check
+                    <span class="section-risk">50 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> Regulatory records reveal a history of compliance failures including a significant $2M Anti-Money Laundering (AML) penalty imposed in 2021. The entity has been subject to enforcement actions across multiple jurisdictions for failure to maintain adequate beneficial ownership records and suspicious transaction reporting violations.</p>
+                </div>
+                
+                <div class="warning-flag">
+                    💰 <strong>Regulatory Penalties:</strong> $2M AML fine and ongoing compliance issues across multiple jurisdictions
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">AML Violations:</span>
+                        <span class="detail-value">$2M Fine (2021)</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Regulatory Status:</span>
+                        <span class="detail-value">Under Enhanced Monitoring</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Compliance Rating:</span>
+                        <span class="detail-value">Poor</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Reputation &amp; Integrity (English)
+                    <span class="section-risk">45 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> English-language media sources contain multiple negative references linking the entity to money laundering investigations, tax evasion schemes, and offshore financial scandals. Investigative journalism has highlighted the company's role in facilitating illicit financial flows, with particular focus on its use of bearer shares to obscure beneficial ownership.</p>
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Media Mentions:</span>
+                        <span class="detail-value">47 Negative Articles</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Investigation Reports:</span>
+                        <span class="detail-value">ICIJ, Guardian, Reuters</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Reputation Score:</span>
+                        <span class="detail-value">High Risk</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Reputation &amp; Integrity (Local Language)
+                    <span class="section-risk">35 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> Local and regional language sources provide limited coverage due to the entity's offshore domicile, however, available sources in relevant jurisdictions corroborate concerns raised in English-language media. Regional financial crime databases contain references to the entity in connection with suspicious activity reports and regulatory investigations.</p>
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Local Media Coverage:</span>
+                        <span class="detail-value">Limited but Negative</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Regional Databases:</span>
+                        <span class="detail-value">Multiple SAR References</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Local Risk Rating:</span>
+                        <span class="detail-value">Elevated</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Social Media Review
+                    <span class="section-risk">15 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> The entity maintains no official social media presence, consistent with its passive holding company structure. However, social media monitoring has identified discussions and posts by investigative journalists and financial crime experts referencing the company in the context of offshore finance concerns and regulatory investigations.</p>
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Official Presence:</span>
+                        <span class="detail-value">None</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Third-Party Mentions:</span>
+                        <span class="detail-value">Negative Context Only</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Social Risk Level:</span>
+                        <span class="detail-value">Low-Medium</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Financials / Credit Summary
+                    <span class="section-risk">30 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> Financial information is severely limited due to the entity's offshore structure and exemption from filing requirements. No audited financial statements are available, and banking relationships appear to be maintained through correspondent arrangements that limit transparency. Asset valuations and revenue sources remain undisclosed.</p>
+                </div>
+                
+                <div class="warning-flag">
+                    📊 <strong>Financial Opacity:</strong> Complete lack of financial transparency raises significant due diligence concerns
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Financial Statements:</span>
+                        <span class="detail-value">Not Available</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Credit Rating:</span>
+                        <span class="detail-value">Unrated</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Asset Disclosure:</span>
+                        <span class="detail-value">None</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Source of Wealth Summary
+                    <span class="section-risk">55 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> Source of wealth cannot be determined through available records, presenting a critical compliance risk. The entity's offshore structure, bearer share arrangement, and lack of operational activities make it impossible to establish legitimate sources of funding. This opacity is particularly concerning given the entity's substantial apparent asset base and international transaction history.</p>
+                </div>
+                
+                <div class="warning-flag">
+                    🔍 <strong>Critical Gap:</strong> Complete inability to verify source of wealth presents maximum AML/KYC risk
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Wealth Source:</span>
+                        <span class="detail-value">Undetermined</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Income Streams:</span>
+                        <span class="detail-value">Unknown</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Verification Status:</span>
+                        <span class="detail-value">Impossible</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Court Records Check
+                    <span class="section-risk">35 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> Court records reveal involvement in multiple civil litigation matters across jurisdictions, primarily relating to asset recovery proceedings and regulatory enforcement actions. The entity has been named as a defendant in several cases involving allegations of money laundering facilitation and beneficial ownership concealment.</p>
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Active Cases:</span>
+                        <span class="detail-value">3 Civil Proceedings</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Regulatory Actions:</span>
+                        <span class="detail-value">2 Enforcement Matters</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Legal Risk Level:</span>
+                        <span class="detail-value">Medium-High</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Criminal Records Check
+                    <span class="section-risk">20 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> No direct criminal charges have been filed against the entity itself, which is consistent with its corporate structure. However, criminal investigations in multiple jurisdictions have referenced the entity as a vehicle potentially used in money laundering schemes, though no formal charges have been brought to date.</p>
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Criminal Charges:</span>
+                        <span class="detail-value">None Filed</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Investigation References:</span>
+                        <span class="detail-value">Multiple Jurisdictions</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Criminal Risk:</span>
+                        <span class="detail-value">Medium</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Insolvency &amp; Bankruptcy Check
+                    <span class="section-risk">10 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> No insolvency or bankruptcy proceedings have been initiated against the entity. The company maintains active status in the Cayman Islands registry, and there are no indicators of financial distress from a corporate standpoint, though this assessment is limited by the lack of available financial information.</p>
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Insolvency Status:</span>
+                        <span class="detail-value">None Recorded</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Financial Distress:</span>
+                        <span class="detail-value">No Indicators</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Corporate Status:</span>
+                        <span class="detail-value">Active/Current</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Entity / Individual Profiling
+                    <span class="section-risk">50 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> Comprehensive profiling reveals classic characteristics of a high-risk offshore vehicle designed for asset concealment. The entity exhibits multiple red flags including use of nominee arrangements, bearer shares, no operational substance, and connections to known high-risk service providers. The profile is consistent with entities used for illicit financial activities.</p>
+                </div>
+                
+                <div class="warning-flag">
+                    🎭 <strong>High-Risk Profile:</strong> Entity characteristics align with financial crime typologies for asset laundering and ownership concealment
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Risk Typology:</span>
+                        <span class="detail-value">Asset Concealment Vehicle</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Complexity Score:</span>
+                        <span class="detail-value">Very High</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Profile Risk:</span>
+                        <span class="detail-value">Maximum</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    Litigation Check
+                    <span class="section-risk">40 pts</span>
+                </h2>
+                
+                <div class="summary-box">
+                    <p><strong>Summary:</strong> The entity is involved in ongoing litigation across multiple jurisdictions, with cases primarily focused on asset recovery, beneficial ownership disclosure, and regulatory compliance matters. Several proceedings involve attempts by law enforcement agencies to pierce the corporate veil and identify true beneficial owners.</p>
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Active Litigation:</span>
+                        <span class="detail-value">5 Ongoing Cases</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Asset Recovery Actions:</span>
+                        <span class="detail-value">2 Proceedings</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Litigation Risk:</span>
+                        <span class="detail-value">High</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">AI-Powered Sentiment Analysis</h2>
+                
+                <div class="sentiment-negative">
+                    <div class="sentiment-title">Overall Sentiment: NEGATIVE</div>
+                    <p>The public records indicate potential involvement in financial crimes and association with sanctioned individuals. The subject has a history of regulatory penalties.</p>
+                    
+                    <div class="evidence-quote">
+                        <strong>Supporting Evidence:</strong><br>
+                        "The subject was fined $2M for AML violations in 2021 and has known business ties to a sanctioned entity."
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Investigation Audit Trail</h2>
+                
+                <div class="audit-trail">
+                    <div class="audit-item">
+                        <div>
+                            <strong>Run Triggered</strong> by System<br>
+                            <span style="color: #6c757d;">Enhanced run for Offshore Holdings Ltd.</span>
+                        </div>
+                        <div class="timestamp">12:52:14 PM</div>
+                    </div>
+                    
+                    <div class="audit-item">
+                        <div>
+                            <strong>Review Completed</strong> by Maria Garcia<br>
+                            <span style="color: #6c757d;">Investigation closed with high risk, beneficial ownership unclear.</span>
+                        </div>
+                        <div class="timestamp">12:52:14 PM</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="warning-flag">
+                <strong>⚠️ RECOMMENDATION:</strong> This entity presents significant compliance and reputational risks. Enhanced ongoing monitoring and additional due diligence measures are strongly recommended before establishing any business relationship.
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 Solytics Partners. All rights reserved. | Advanced Financial Intelligence &amp; Risk Analytics</p>
+            <p>This report is confidential and prepared exclusively for authorized personnel.</p>
+        </div>
+    </div>
+
+</body></html>
